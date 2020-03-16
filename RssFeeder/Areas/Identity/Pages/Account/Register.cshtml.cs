@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using RssFeeder.Controllers;
 using RssFeeder.Models;
 
 namespace RssFeeder.Areas.Identity.Pages.Account
@@ -103,7 +104,7 @@ namespace RssFeeder.Areas.Identity.Pages.Account
                     else
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        return RedirectToAction(nameof(FeedsController.Index), "Feeds");
                     }
                 }
                 foreach (var error in result.Errors)

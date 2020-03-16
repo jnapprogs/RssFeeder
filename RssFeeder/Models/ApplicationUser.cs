@@ -4,6 +4,6 @@ namespace RssFeeder.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        
+
     }
 }

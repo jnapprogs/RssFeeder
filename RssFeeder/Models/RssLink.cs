@@ -15,5 +15,8 @@ namespace RssFeeder.Models
 
         [StringLength(100, ErrorMessage = "Description cannot exceed 100 characters")]
         public string Description { get; set; }
+
+        public string OwnerId { get; set; }
+        public ApplicationUser Owner { get; set; }
     }
 }

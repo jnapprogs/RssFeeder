@@ -6,7 +6,8 @@ namespace RssFeeder.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
-        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<RssLink> RssLinks { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

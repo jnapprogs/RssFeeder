@@ -1,5 +1,24 @@
 ﻿@model int
 
 <div class="container">
-    <h1 class="text-center">The current user has @Model RSS Links!!!</h1>
+    <div class="text-right">
+        <button class="btn btn-info">New RSS Link</button>
+    </div>
+    <div class="text-center">
+        @if (Model == 0)
+        {
+            <h1>You have no RSS links saved</h1>
+        }
+        else
+        {
+            <div class="row">
+                @for (int i = 0; i < 10; ++i)
+                {
+                    <div class="col-md-4">
+                        <partial name="_FeedLinkCard" />
+                    </div>
+                }
+            </div>
+        }
+    </div>
 </div>

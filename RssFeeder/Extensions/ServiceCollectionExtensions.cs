@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RssFeeder.Data;
 using RssFeeder.Models;
+using RssFeeder.Profiles;
 using RssFeeder.Repositories;
 using RssFeeder.Services;
 
@@ -16,6 +18,7 @@ namespace RssFeeder.Extensions
         {
             RegisterDatabaseDependency(services, configuration);
             RegisterDomainDependencies(services);
+            RegisterAutoMapper(services);
             RegisterFrameworkDependencies(services);
         }
 
@@ -36,6 +39,11 @@ namespace RssFeeder.Extensions
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
             services.AddRazorPages();
+        }
+
+        private static void RegisterAutoMapper(IServiceCollection services)
+        {
+            services.AddAutoMapper(typeof(ModelToResourceProfile));
         }
 
         private static void RegisterDomainDependencies(IServiceCollection services)

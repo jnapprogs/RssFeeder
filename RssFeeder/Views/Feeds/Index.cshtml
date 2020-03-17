@@ -1,24 +1,28 @@
-﻿@model int
+﻿@using RssFeeder.Resources
+@model IEnumerable<RssFeeder.Resources.RssLinkResource>
 
 <div class="container">
+    <div id="modalContainer"></div>
     <div class="text-right">
-        <button class="btn btn-info">New RSS Link</button>
+        <a asp-controller="Feeds" asp-action="Create" id="addLinkButton" class="btn btn-info">
+            New RSS Link
+        </a>
     </div>
     <div class="text-center">
-        @if (Model == 0)
+        @if (!Model.Any())
         {
             <h1>You have no RSS links saved</h1>
         }
         else
         {
-            <div class="row">
-                @for (int i = 0; i < 10; ++i)
-                {
-                    <div class="col-md-4">
-                        <partial name="_FeedLinkCard" />
-                    </div>
-                }
+    <div class="row">
+        @foreach (RssLinkResource link in Model)
+        {
+            <div class="col-md-4">
+                <partial name="_FeedLinkCard" model="link" />
             </div>
+        }
+    </div>
         }
     </div>
 </div>

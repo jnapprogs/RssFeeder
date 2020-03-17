@@ -1,14 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using RssFeeder.Data;
 
-namespace RssFeeder.Models
+namespace RssFeeder.Resources
 {
-    public class RssLink
+    public class NewRssLinkResource
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required]
         [RegularExpression(@"\S+", ErrorMessage = "No spaces are allowed before or after the URL")]
         [Url(ErrorMessage = "Please enter a valid URL")]
@@ -20,8 +17,5 @@ namespace RssFeeder.Models
         [RegularExpression(@"\S+", ErrorMessage = "No spaces are allowed before or after the description")]
         [StringLength(100, ErrorMessage = "Description cannot exceed 100 characters")]
         public string Description { get; set; }
-
-        public string OwnerId { get; set; }
-        public ApplicationUser Owner { get; set; }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using RssFeeder.Data;
 using RssFeeder.Models;
 
@@ -16,13 +14,18 @@ namespace RssFeeder.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<RssLink>> GetAllAsync(string userId)
+        public IQueryable<RssLink> GetAll(string userId)
         {
-            IEnumerable<RssLink> rssLinks = await _context.RssLinks
-                .Where(link => link.OwnerId == userId)
-                .ToListAsync();
+            IQueryable<RssLink> rssLinks =
+                _context.RssLinks.Where(link => link.OwnerId == userId);
 
             return rssLinks;
+        }
+
+        public async Task SaveAsync(RssLink newLink)
+        {
+            await _context.RssLinks.AddAsync(newLink);
+            await _context.SaveChangesAsync();
         }
     }
 }

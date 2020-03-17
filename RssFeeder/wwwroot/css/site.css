@@ -73,3 +73,14 @@ body {
 .rss-link-card {
     margin: 5px;
 }
+
+#rssFeedDescriptionInput {
+    resize: none;
+}
+
+.rss-feed-btn {
+    width: 100%;
+}
+.rss-feed-card-btn {
+    margin-bottom: 5px;
+}

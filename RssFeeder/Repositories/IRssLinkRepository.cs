@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RssFeeder.Models;
 
@@ -6,6 +7,7 @@ namespace RssFeeder.Repositories
 {
     public interface IRssLinkRepository
     {
-        Task<IEnumerable<RssLink>> GetAllAsync(string userId);
+        IQueryable<RssLink> GetAll(string userId);
+        Task SaveAsync(RssLink newLink);
     }
 }

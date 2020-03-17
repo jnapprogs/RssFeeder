@@ -9,6 +9,7 @@ using RssFeeder.Models;
 using RssFeeder.Profiles;
 using RssFeeder.Repositories;
 using RssFeeder.Services;
+using RssFeeder.Utils;
 
 namespace RssFeeder.Extensions
 {
@@ -43,7 +44,7 @@ namespace RssFeeder.Extensions
 
         private static void RegisterAutoMapper(IServiceCollection services)
         {
-            services.AddAutoMapper(typeof(ModelToResourceProfile));
+            services.AddAutoMapper(typeof(ModelToResourceProfile), typeof(ResourceToModelProfile));
         }
 
         private static void RegisterDomainDependencies(IServiceCollection services)
@@ -52,6 +53,7 @@ namespace RssFeeder.Extensions
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddScoped<IRssLinkRepository, RssLinkRepository>();
             services.AddScoped<IRssLinkService, RssLinkService>();
+            services.AddScoped<IRssParser, RssFeedParser>();
         }
     }
 }

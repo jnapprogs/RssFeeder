@@ -1,6 +1,7 @@
-﻿@model RssFeeder.Resources.RssLinkResource
+﻿@using RssFeeder.Controllers
+@model RssFeeder.Resources.RssLinkResource
 
-    <div class="card rss-link-card">
+<div class="card rss-link-card">
         <div class="card-header">
             <img src="@Model.ImageUrl" alt="RSS Link Image" />
         </div>
@@ -9,7 +10,11 @@
             <p class="card-text">@Model.Description</p>
         </div>
         <div class="card-footer">
-            <button class="rss-feed-btn rss-feed-card-btn btn btn-outline-danger">Delete</button>
+            <button class="rss-feed-btn rss-feed-card-btn btn btn-outline-danger delete-btn"
+                    data-url="@Url.Action(nameof(FeedsController.ConfirmDelete), "Feeds")"
+                    data-feed_id="@Model.Id">
+                Delete
+            </button>
             <button type="submit" class="rss-feed-btn rss-feed-card-btn btn btn-outline-primary">Register</button>
         </div>
     </div>

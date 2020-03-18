@@ -2,57 +2,63 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-document.addEventListener('DOMContentLoaded', () => {
-    function hasValidInput(value) {
-        return value.trim().length > 0;
-    }
 
-    function validateInputs(rssLinkInputs) {
-        const results = {};
-        if (!hasValidInput(rssLinkInputs["rssFeedName"])) {
-            results["feedNameError"] = "The feed name is required";
-        }
-    }
+function openDeleteConfirmationModal(item) {
+    console.log(item);
+}
 
-    $("#addLinkButton").on("click", function () {
+$(function() {
+    const modalContainer = $("#modalContainer");
+
+    $(".delete-btn").on("click", function () {
         const url = $(this).data("url");
-        $.get(url, { message: "Test Message"}).done(function (data) {
-            $("#modalContainer").html(data);
-            $("#modalContainer > .modal").modal("show");
-        });
-    });
+        const feed_id = $(this).data("feed_id");
 
-    $(document).on("click", "#newRssLinkModalCloseButton", function () {
-        $("#modalContainer").html("");
-    });
-
-    $(document).on("input", "#rssLinkDescriptionInput", function() {
-        const value = $(this).val;
-        if (value.length > 100) {
-            this.value = this.value.substring(0, 100);
-        }
-    });
-
-    $(document).on("click", "#confirmAddLinkButton", function () {
-        const postUrl = $(this).data("url");
-        const rssFeedName = document.querySelector("#rssLinkNameInput").value;
-        const rssFeedUrl = document.querySelector("#rssLinkUrlInput").value;
-        const rssFeedDescription = document.querySelector("#rssLinkDescriptionInput").value;
-
-        $.ajax(postUrl, {
-            method: "POST",
+        $.ajax({
+            url: url,
             data: {
-                name: rssFeedName,
-                url: rssFeedUrl,
-                description: rssFeedDescription
+                feedId: feed_id
             },
-            success: function (message) {
-                console.log("Success is called...");
-                console.log(message);
+            success: function(data) {
+                modalContainer.html(data);
+                $("#confirmDeleteModal").show();
             },
-            error: function(message) {
-                console.log("Error");
+            error: function (error) {
+                modalContainer.html("");
+                alert(error.responseText);
             }
         });
     });
+
+    $(document).on("click", ".remove-modal", function () {
+        modalContainer.html("");
+    });
+
+    $(document).on("click", "#confirmDeleteButton", function () {
+        const url = $(this).data("url");
+        const feedId = $(this).data("feed_id");
+
+        console.log("Ready");
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: {
+                feedId: feedId
+            },
+            success: function(response) {
+                modalContainer.html("");
+                window.location.href = response.redirectUrl;
+            },
+            error: function(error) {
+                modalContainer.html("");
+                alert(error.responseText);
+            }
+        });
+    });
+});
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    
 });

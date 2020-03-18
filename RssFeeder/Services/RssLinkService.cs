@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RssFeeder.Models;
 using RssFeeder.Repositories;
-using RssFeeder.Resources;
 using RssFeeder.Utils;
 
 namespace RssFeeder.Services
@@ -30,6 +29,11 @@ namespace RssFeeder.Services
         public async Task SaveAsync(RssLink newLink)
         {
             await _repository.SaveAsync(newLink);
+        }
+
+        public async Task DeleteAsync(RssLink link)
+        {
+            await _repository.DeleteAsync(link);
         }
     }
 }

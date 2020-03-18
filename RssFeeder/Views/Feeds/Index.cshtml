@@ -15,14 +15,14 @@
         }
         else
         {
-    <div class="row">
-        @foreach (RssLinkResource link in Model)
-        {
-            <div class="col-md-4">
-                <partial name="_FeedLinkCard" model="link" />
+            <div class="row">
+                @foreach (RssLinkResource link in Model)
+                {
+                    <div class="col-md-4">
+                        <partial name="_FeedLinkCard" model="link"/>
+                    </div>
+                }
             </div>
-        }
-    </div>
         }
     </div>
 </div>

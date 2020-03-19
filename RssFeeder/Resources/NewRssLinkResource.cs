@@ -12,7 +12,6 @@ namespace RssFeeder.Resources
 
         [Display(Name = "Description (optional)")]
         [DataType(DataType.Text)]
-        [RegularExpression(@"\S+", ErrorMessage = "No spaces are allowed before or after the description")]
         [StringLength(512, ErrorMessage = "Description cannot exceed 512 characters")]
         public string Description { get; set; }
     }

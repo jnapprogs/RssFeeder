@@ -29,6 +29,14 @@ namespace RssFeeder.Services
 
         public async Task CreateAsync(RssLink newLink)
         {
+            if (newLink.Description == null)
+            {
+                await _repository.CreateAsync(newLink);
+                return;
+            }
+
+            newLink.ValidateDescription();
+
             await _repository.CreateAsync(newLink);
         }
 
@@ -60,6 +68,7 @@ namespace RssFeeder.Services
             if (link.Description != existingLink.Description)
             {
                 existingLink.Description = link.Description;
+                existingLink.ValidateDescription();
             }
 
             await _repository.SaveAsync(existingLink);

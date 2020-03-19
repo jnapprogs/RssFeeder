@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RssFeeder.Models;
@@ -44,14 +48,45 @@ namespace RssFeeder.Controllers
             return View(resource);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ConfirmDelete(int? feedId)
+        {
+            if (feedId.HasValue)
+            {
+                return PartialView("_ConfirmDeleteModal", feedId.Value);
+            }
+
+            Response.StatusCode = 400;
+            await Response.WriteAsync("RSS Feed does not exist");
+
+            return null;
+        }
+
         [HttpPost]
+        public async Task<IActionResult> Delete(int? feedId)
+        {
+            if (!feedId.HasValue)
+            {
+                Response.StatusCode = 400;
+                await Response.WriteAsync("RSS Feed does not exist");
+                return null;
+            }
+
+            var linkToDelete = new RssLink {Id = feedId.Value};
+            await _service.DeleteAsync(linkToDelete);
+
+            return Json(new {redirectUrl = Url.Action("Index", "Feeds")});
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([FromForm] NewRssLinkResource resource)
         {
             if (!ModelState.IsValid)
             {
                 return View(resource);
             }
-            
+
             var user = await _userManager.GetUserAsync(HttpContext.User);
             RssLink newLink = _mapper.Map<NewRssLinkResource, RssLink>(resource);
             newLink.OwnerId = user.Id;
@@ -61,19 +96,10 @@ namespace RssFeeder.Controllers
             return RedirectToAction(nameof(Index), "Feeds");
         }
 
-        [HttpPost]
-        public IActionResult CreateNewLink([FromForm] NewRssLinkResource resource)
+        [HttpDelete]
+        public IActionResult Delete(RssLink linkToDelete)
         {
-            if (!ModelState.IsValid)
-            {
-                var item = new PartialViewResult();
-                return PartialView("_NewFeedModal", resource);
-
-                /*Dictionary<string, string> items = ModelState.ExtractErrors();
-                return new JsonResult(items);*/
-            }
-
-            return RedirectToAction(nameof(Index), "Feeds");
+            return RedirectToAction("Index", "Feeds");
         }
     }
 }

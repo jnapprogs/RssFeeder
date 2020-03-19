@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using RssFeeder.Models;
-using RssFeeder.Resources;
 
 namespace RssFeeder.Services
 {
@@ -9,5 +8,6 @@ namespace RssFeeder.Services
     {
         IQueryable<RssLink> GetAll(string userId);
         Task SaveAsync(RssLink newLink);
+        Task DeleteAsync(RssLink link);
     }
 }

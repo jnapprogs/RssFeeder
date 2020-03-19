@@ -27,5 +27,11 @@ namespace RssFeeder.Repositories
             await _context.RssLinks.AddAsync(newLink);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(RssLink link)
+        {
+            _context.RssLinks.Remove(link);
+            await _context.SaveChangesAsync();
+        }
     }
 }

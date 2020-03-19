@@ -7,7 +7,9 @@ namespace RssFeeder.Services
     public interface IRssLinkService
     {
         IQueryable<RssLink> GetAll(string userId);
-        Task SaveAsync(RssLink newLink);
+        Task CreateAsync(RssLink newLink);
         Task DeleteAsync(RssLink link);
+        Task<RssLink> FindById(int id);
+        Task SaveAsync(RssLink link);
     }
 }

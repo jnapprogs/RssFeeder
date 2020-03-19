@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -91,14 +89,54 @@ namespace RssFeeder.Controllers
             RssLink newLink = _mapper.Map<NewRssLinkResource, RssLink>(resource);
             newLink.OwnerId = user.Id;
 
-            await _service.SaveAsync(newLink);
+            await _service.CreateAsync(newLink);
 
             return RedirectToAction(nameof(Index), "Feeds");
         }
 
         [HttpDelete]
-        public IActionResult Delete(RssLink linkToDelete)
+        public IActionResult Delete()
         {
+            return RedirectToAction("Index", "Feeds");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return View("Error", new ErrorViewModel
+                {
+                    ErrorMessage = "The RSS Feed you are trying to edit does not exist"
+                });
+            }
+
+            RssLink link = await _service.FindById(id.Value);
+
+            return View(link);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SaveEdit(RssLink resource)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", resource);
+            }
+
+            try
+            {
+                await _service.SaveAsync(resource);
+            }
+            catch (ArgumentException e)
+            {
+                return View("Error", new ErrorViewModel
+                {
+                    ErrorMessage = e.Message
+                });
+            }
+
             return RedirectToAction("Index", "Feeds");
         }
     }

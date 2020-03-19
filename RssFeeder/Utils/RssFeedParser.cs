@@ -27,8 +27,9 @@ namespace RssFeeder.Utils
             RssLinkResource resource = new RssLinkResource
             {
                 Id = rssFeed.Id,
+                FeedLink = rssFeed.Url,
                 Name = feed.Title.Text,
-                Description = feed.Description.Text,
+                Description = rssFeed.Description ?? feed.Description.Text,
                 ImageUrl = feed.ImageUrl
             };
 

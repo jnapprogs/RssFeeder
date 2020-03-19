@@ -8,7 +8,7 @@ namespace RssFeeder.Profiles
     {
         public ModelToResourceProfile()
         {
-            CreateMap<RssLink, RssLinkResource>();
+            CreateMap<RssLink, NewRssLinkResource>();
         }
     }
 }

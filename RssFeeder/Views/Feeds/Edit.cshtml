@@ -1,13 +1,12 @@
-﻿@using RssFeeder.Controllers
-@model RssFeeder.Resources.NewRssLinkResource
+﻿@model RssLink
 
-<form method="post" asp-action="Create" asp-controller="Feeds">
+<form method="post" asp-action="SaveEdit" asp-controller="Feeds" asp-route-id="@Model.Id">
     @Html.AntiForgeryToken()
     <h4>Add a New RSS Feed</h4>
-    <hr/>
+    <hr />
     <div class="form-group">
         <label asp-for="Url"></label>
-        <input asp-for="Url" class="form-control"/>
+        <input asp-for="Url" class="form-control" />
         <span asp-validation-for="Url" class="text-danger"></span>
     </div>
     <div class="form-group">

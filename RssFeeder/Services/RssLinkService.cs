@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using RssFeeder.Models;
@@ -26,14 +27,42 @@ namespace RssFeeder.Services
             return rssLinks;
         }
 
-        public async Task SaveAsync(RssLink newLink)
+        public async Task CreateAsync(RssLink newLink)
         {
-            await _repository.SaveAsync(newLink);
+            await _repository.CreateAsync(newLink);
         }
 
         public async Task DeleteAsync(RssLink link)
         {
             await _repository.DeleteAsync(link);
+        }
+
+        public async Task<RssLink> FindById(int id)
+        {
+            RssLink link = await _repository.FindById(id);
+
+            return link;
+        }
+
+        public async Task SaveAsync(RssLink link)
+        {
+            var existingLink = await _repository.FindById(link.Id);
+            if (existingLink == null)
+            {
+                throw new ArgumentException("The RSS Feed you are trying to edit does not exist");
+            }
+
+            if (link.Url != existingLink.Url)
+            {
+                existingLink.Url = link.Url;
+            }
+
+            if (link.Description != existingLink.Description)
+            {
+                existingLink.Description = link.Description;
+            }
+
+            await _repository.SaveAsync(existingLink);
         }
     }
 }

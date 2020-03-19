@@ -58,6 +58,18 @@ $(function() {
     });
 });
 
+$(function() {
+    const modalContainer = $("#modalContainer");
+
+    $(document).on("click", ".edit-btn", function () {
+        const feedLink = $(this).data("feedlink");
+        const description = $(this).data("description");
+
+        console.log(`Feed link: ${feedLink}`);
+        console.log(`Feed description: ${description}`);
+    });
+});
+
 
 document.addEventListener('DOMContentLoaded', () => {
     

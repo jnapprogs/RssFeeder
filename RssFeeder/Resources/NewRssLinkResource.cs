@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using RssFeeder.Data;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RssFeeder.Resources
 {
@@ -12,10 +10,10 @@ namespace RssFeeder.Resources
         [DataType(DataType.Url)]
         public string Url { get; set; }
 
-        [Display(Name = "Description (100 characters max)")]
+        [Display(Name = "Description (optional)")]
         [DataType(DataType.Text)]
         [RegularExpression(@"\S+", ErrorMessage = "No spaces are allowed before or after the description")]
-        [StringLength(100, ErrorMessage = "Description cannot exceed 100 characters")]
+        [StringLength(512, ErrorMessage = "Description cannot exceed 512 characters")]
         public string Description { get; set; }
     }
 }

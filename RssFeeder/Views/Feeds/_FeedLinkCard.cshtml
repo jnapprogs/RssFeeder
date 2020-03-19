@@ -18,6 +18,11 @@
             <a class="rss-feed-btn rss-feed-card-btn btn btn-outline-dark edit-btn" asp-action="Edit" asp-controller="Feeds" asp-route-id="@Model.Id">
                 Edit
             </a>
-            <button type="submit" class="rss-feed-btn rss-feed-card-btn btn btn-outline-primary">Open</button>
+            <a class="rss-feed-btn rss-feed-card-btn btn btn-outline-primary"
+               asp-action="@nameof(FeedsController.Detail)"
+               asp-controller="Feeds"
+               asp-route-link="@Model.FeedLink">
+                Open
+            </a>
         </div>
     </div>

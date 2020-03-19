@@ -1,0 +1,18 @@
+﻿@model RssFeedArticle
+
+<div class="rss-link-card card">
+    <div class="card-header">
+        <div class="float-left">
+            <a href="@Model.Url">
+                @Model.Title
+            </a>
+        </div>
+        <div class="float-right">
+            Publish Date: @Model.PublishDate
+        </div>
+    </div>
+    <div class="card-body">
+        <header class="blockquote">Publish Date: @Model.PublishDate</header>
+        <h5 class="card-title">@Model.Description</h5>
+    </div>
+</div>

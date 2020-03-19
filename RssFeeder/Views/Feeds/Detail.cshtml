@@ -1,0 +1,28 @@
+﻿@model RssFeeder.ViewModels.RssFeedViewModel
+
+<div class="container">
+    <partial name="_RssFeedSummary" for="@Model.Summary" />
+    @await Html.PartialAsync("_ArticleList", Model)
+</div>
+
+@*<div class="container-fluid">
+    <table id="feedTable" class="table table-striped table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">@nameof(RssFeedArticle.Title)</th>
+            <th scope="col">@nameof(RssFeedArticle.Description)</th>
+            <th scope="col">Publish Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (RssFeedArticle article in Model.Articles)
+        {
+            <tr>
+                <td>@article.Title</td>
+                <td>@article.Description</td>
+                <td>@article.PublishDate</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>*@

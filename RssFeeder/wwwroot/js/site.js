@@ -7,6 +7,13 @@ function openDeleteConfirmationModal(item) {
     console.log(item);
 }
 
+/**
+ * DataTable for the RSS articles
+ */
+$(function() {
+    $("#feedTable").DataTable();
+});
+
 $(function() {
     const modalContainer = $("#modalContainer");
 
@@ -70,7 +77,27 @@ $(function() {
     });
 });
 
+$(function() {
+    $(document).on("change", "#sortOption", function () {
+        const selectedIndex = $(this).prop("selectedIndex");
+        if (selectedIndex === 0) {
+            return;
+        }
 
-document.addEventListener('DOMContentLoaded', () => {
-    
+        const feedUrl = $(this).data("feedurl");
+        const sortType = $(this).val();
+        const url = $("#articlesContainer").data("url");
+        const container = $("#articlesContainer");
+
+        $.ajax({
+            url: url,
+            data: {
+                feedUrl: feedUrl,
+                sortType: sortType
+            },
+            success: function(response) {
+                window.location.href = response.redirectUrl;
+            }
+        });
+    });
 });

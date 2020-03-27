@@ -1,0 +1,4 @@
+﻿@model RssFeeder.ViewModels.RssFeedViewModel
+
+<partial name="_RssFeedSummary" for="@Model.Summary" />
+@await Html.PartialAsync("_ArticleList", Model.Articles)

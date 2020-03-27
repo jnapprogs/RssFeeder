@@ -10,6 +10,7 @@ using RssFeeder.Models;
 using RssFeeder.Resources;
 using RssFeeder.Services;
 using RssFeeder.Utils;
+using RssFeeder.ViewModels;
 
 namespace RssFeeder.Controllers
 {
@@ -33,7 +34,7 @@ namespace RssFeeder.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             IQueryable<RssLink> rssLinks = _service.GetAll(user.Id);
-            IEnumerable<RssLinkResource> resources = await _parser.ParseAsync(rssLinks);
+            IEnumerable<RssLinkResource> resources = await _parser.ParseFeedsAsync(rssLinks);
 
             return View(resources);
         }
@@ -138,6 +139,20 @@ namespace RssFeeder.Controllers
             }
 
             return RedirectToAction("Index", "Feeds");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detail(string link, string sortType = SortTypes.None)
+        {
+            RssFeedViewModel viewModel = await _parser.ParseArticlesAsync(link, sortType);
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Sort(string feedUrl, string sortType)
+        {
+            return Json(new { redirectUrl = Url.Action("Detail", "Feeds", new {link = feedUrl, sortType = sortType})});
         }
     }
 }

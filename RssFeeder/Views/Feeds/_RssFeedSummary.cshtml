@@ -1,0 +1,23 @@
+﻿@model RssFeedSummary
+
+<div>
+    <h2>Feed Summary</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-6">
+            <p>Number of articles: @Model.NumberOfArticles</p>
+        </div>
+        <div class="col-md-6">
+            <p>Number of articles with image: @Model.ArticlesWithImage</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <p>Earliest Published Date: @Model.EarliestPublishDate</p>
+        </div>
+        <div class="col-md-6">
+            <p>Latest published date: @Model.LatestPublishDate</p>
+        </div>
+    </div>
+    <hr/>
+</div>

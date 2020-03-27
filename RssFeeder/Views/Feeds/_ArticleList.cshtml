@@ -1,0 +1,32 @@
+﻿@using Microsoft.EntityFrameworkCore.Metadata.Conventions
+@using RssFeeder.Controllers
+@using RssFeeder.ViewModels
+@model RssFeeder.ViewModels.RssFeedViewModel
+
+<div class="float-right">
+    Sort: 
+    <span>
+        @*<select id="sortOption">
+            <option value="publishDateAscending">
+            </option>
+            <option value="publishDateDescending">Publish Date Descending</option>
+            <option value="alphabetical">Alphabetical</option>
+            <option value="reverseAlphabetical">Reverse Alphabetical</option>
+        </select>*@
+        
+        <select id="sortOption"
+                data-feedurl="@Model.FeedUrl"
+                asp-for="@Model.SortType"
+                asp-items="@(new SelectList(Model.SortListItems, nameof(SortListItem.Value), nameof(SortListItem.Name)));">
+            <option>-- Sort Options --</option>
+        </select>
+    </span>
+</div>
+<br/>
+
+<div id="articlesContainer" data-url="@Url.Action(nameof(FeedsController.Sort), "Feeds")">
+    @foreach (RssFeedArticle article in Model.Articles)
+    {
+        <partial name="_ArticleCard" model="article " />
+    }
+</div>

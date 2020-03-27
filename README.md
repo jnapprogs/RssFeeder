@@ -2,7 +2,7 @@
 
 ## Running the application
 
-If you are going to run the application, you will need SQL Server and Visual Studio.  The developer edition is all you will be needing and it can be acquired [here](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).
+If you are going to run the application, you will need [SQL Server Developer Edition](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) and [Visual Studio Community Edition](https://visualstudio.microsoft.com/)
 
 To setup the database, right-click on the `RssFeeder` project and select `Manage User Secrets`.  Inside of the JSON, enter the following:
 
